@@ -61,17 +61,17 @@ class Workspace:
 
 	def build_workspace(self):
 		self.cards = {
-			'label': self.doc.cards_label,
+			'label': _(self.doc.cards_label),
 			'items': self.get_cards()
 		}
 
 		self.charts = {
-			'label': self.doc.charts_label,
+			'label': _(self.doc.charts_label),
 			'items': self.get_charts()
 		}
 
 		self.shortcuts = {
-			'label': self.doc.shortcuts_label,
+			'label': _(self.doc.shortcuts_label),
 			'items': self.get_shortcuts()
 		}
 
@@ -101,6 +101,7 @@ class Workspace:
 				# Mark Spotlights for initial
 				if item.get("type") == "doctype":
 					name = item.get("name")
+					label = _(item.get("label"))
 					count = _doctype_contains_a_record(name)
 
 					item["count"] = count
@@ -133,7 +134,7 @@ class Workspace:
 				else:
 					new_section = section.as_dict().copy()
 				new_section["links"] = new_items
-				new_section["label"] = section.title
+				new_section["label"] = _(section.title)
 				new_data.append(new_section)
 
 		return new_data
@@ -147,7 +148,7 @@ class Workspace:
 
 			for chart in charts:
 				if frappe.has_permission('Dashboard Chart', doc=chart.chart_name):
-					chart.label = chart.label if chart.label else chart.chart_name
+					chart.label = _(chart.label) if chart.label else _(chart.chart_name)
 					all_charts.append(chart)
 
 		return all_charts
@@ -167,7 +168,8 @@ class Workspace:
 
 		for item in shortcuts:
 			new_item = item.as_dict().copy()
-			new_item['name'] = _(item.link_to)
+			new_item['name'] = item.link_to
+			new_item['label'] = _(item.link_to)
 			if self.is_item_allowed(item.link_to, item.type) and _in_active_domains(item):
 				if item.type == "Page":
 					page = self.allowed_pages[item.link_to]
@@ -336,7 +338,7 @@ def make_them_cards(page_name, from_module=None, to_module=None, icon=None):
 		print("--- Got Page: {0}".format(page.name))
 	else:
 		page = frappe.new_doc("Desk Page")
-		page.label = page_name
+		page.label = _(page_name)
 		page.cards = []
 		page.icon = icon
 		print("--- New Page: {0}".format(page.name))
@@ -363,7 +365,7 @@ def make_them_cards(page_name, from_module=None, to_module=None, icon=None):
 				pass
 
 		# Set Child doc values
-		card.title = data['label']
+		card.title = _(data['label'])
 		card.icon = data.get('icon')
 		# Pretty dump JSON
 		card.links = json.dumps(data['items'], indent=4, sort_keys=True)
