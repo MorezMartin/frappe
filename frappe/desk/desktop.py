@@ -147,9 +147,14 @@ class Workspace:
 				charts = charts + self.extended_charts
 
 			for chart in charts:
+<<<<<<< HEAD
 				if frappe.has_permission('Dashboard Chart', doc=chart.chart_name):
 					chart.label = _(chart.label) if chart.label else _(chart.chart_name)
 					all_charts.append(chart)
+=======
+				chart.label = _(chart.label) if chart.label else _(chart.chart_name)
+				all_charts.append(chart)
+>>>>>>> 795f0261df48f2dff96a008b8f22ad2736bc77cb
 
 		return all_charts
 

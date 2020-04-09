@@ -231,6 +231,7 @@ class DesktopPage {
 	}
 
 	make_charts() {
+<<<<<<< HEAD
 		return frappe.dashboard_utils.get_dashboard_settings().then(settings => {
 			let chart_config = settings.chart_config? JSON.parse(settings.chart_config): {};
 			if (this.data.charts.items) {
@@ -247,6 +248,15 @@ class DesktopPage {
 				allow_sorting: false,
 				widgets: this.data.charts.items
 			});
+=======
+		this.sections["charts"] = new frappe.widget.WidgetGroup({
+			title: __(this.data.charts.label) || __(`${this.page_name} Dashboard`),
+			container: this.page,
+			type: "chart",
+			columns: 1,
+			allow_sorting: false,
+			widgets: this.data.charts.items
+>>>>>>> 795f0261df48f2dff96a008b8f22ad2736bc77cb
 		});
 	}
 
