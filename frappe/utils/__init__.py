@@ -254,7 +254,7 @@ def random_string(length: int) -> str:
 def has_gravatar(email: str) -> str:
 	"""Returns gravatar url if user has set an avatar at gravatar.com"""
 	from gevent import monkey
-	monkey.patch_all(ssl=False)
+	monkey.patch_all()
 	import requests
 
 	if frappe.flags.in_import or frappe.flags.in_install or frappe.flags.in_test:
