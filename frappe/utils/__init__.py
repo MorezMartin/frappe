@@ -253,6 +253,8 @@ def random_string(length: int) -> str:
 
 def has_gravatar(email: str) -> str:
 	"""Returns gravatar url if user has set an avatar at gravatar.com"""
+	from gevent import monkey
+	import monkey.patch_all(ssl=False)
 	import requests
 
 	if frappe.flags.in_import or frappe.flags.in_install or frappe.flags.in_test:
@@ -260,7 +262,7 @@ def has_gravatar(email: str) -> str:
 		# since querying gravatar for every item will be slow
 		return ""
 
-	gravatar_url = get_gravatar_url(email, "mm")
+	gravatar_url = get_gravatar_url(email, "404")
 	"""Return gravatar URL for the given email.
 	If `default` is set to "404", gravatar URL will return 404 if no avatar is found.
 	If `default` is set to "mm", a placeholder image will be returned.
