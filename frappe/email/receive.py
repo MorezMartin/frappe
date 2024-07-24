@@ -80,7 +80,7 @@ class EmailServer:
 					self.settings.host,
 					self.settings.incoming_port,
 					timeout=frappe.conf.pop_timeout,
-					ssl_context=ssl.create_default_context(),
+#					ssl_context=ssl.create_default_context(),
 				)
 			else:
 				self.imap = imaplib.IMAP4(
@@ -117,7 +117,7 @@ class EmailServer:
 					self.settings.host,
 					self.settings.incoming_port,
 					timeout=frappe.conf.pop_timeout,
-					context=ssl.create_default_context(),
+#					context=ssl.create_default_context(),
 				)
 			else:
 				self.pop = poplib.POP3(
