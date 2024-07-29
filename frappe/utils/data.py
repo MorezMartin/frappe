@@ -104,7 +104,7 @@ def getdate(
 
 
 def get_datetime(
-	datetime_str: Optional["DateTimeLikeObject"] = None,
+	datetime_str: Optional["DateTimeLikeObject"] = None, datetime_format = DATETIME_FORMAT
 ) -> datetime.datetime | None:
 	if datetime_str is None:
 		return now_datetime()
