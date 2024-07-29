@@ -122,7 +122,7 @@ def get_datetime(
 		return None
 
 	try:
-		return datetime.datetime.strptime(datetime_str, DATETIME_FORMAT)
+		return datetime.datetime.strptime(datetime_str, datetime_format)
 	except ValueError:
 		return parser.parse(datetime_str)
 
