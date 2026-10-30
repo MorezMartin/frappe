@@ -92,10 +92,12 @@ class FrappeMail:
 		)
 		raise_for_status(response)
 
-		# The suite app routes return raw JSON without Frappe's `message`/`data`
-		# wrapper, which `post_process()` would collapse to `None`.
+		# Routes both shapes: suite's custom `/api/...` endpoints return bare JSON, while
+		# whitelisted methods (e.g. suite.mail.api.inbound.pull_raw) carry Frappe's standard
+		# `message` wrapper — unwrap it when present, keep the bare payload otherwise.
 		if raw_response:
-			return response.json()
+			body = response.json()
+			return body.get("message", body) if isinstance(body, dict) else body
 
 		return self.client.post_process(response)
 
